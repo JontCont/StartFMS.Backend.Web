@@ -109,6 +109,10 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+    console.log({
+        'auth_token' : store.getters['auth/token']
+    });
+
     if (to.meta.requiresAuth && !store.getters['auth/token']) {
         next('/login');
     } else if (to.meta.requiresUnauth && !!store.getters['auth/token']) {

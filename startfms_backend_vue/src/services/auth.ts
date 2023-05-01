@@ -17,8 +17,7 @@ export const loginByAuth = async (email: string, password: string) => {
                 token = res.data;
                 return token;
             });
-
-        console.log(token);
+        
         return token;
     }catch(error : any){
         throw getError({
@@ -88,9 +87,6 @@ export const registerByFacebook = async () => {
     // }
 };
 export const getProfile = async () => {
-    throw getError({
-        message : "伺服器暫時無法使用"
-    });
     // try {
     //     const user = await Gatekeeper.getProfile();
     //     return user;
