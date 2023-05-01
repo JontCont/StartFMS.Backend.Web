@@ -15,13 +15,16 @@ import {i18n} from '@/translation';
 })
 export default class MenuSidebar extends Vue {
     public menu = MENU;
-
     get user(): IUser {
         return this.$store.getters['auth/user'];
     }
 
     get sidebarSkin() {
         return this.$store.getters['ui/sidebarSkin'];
+    }
+
+    created() {
+        console.log(MENU);
     }
 }
 
