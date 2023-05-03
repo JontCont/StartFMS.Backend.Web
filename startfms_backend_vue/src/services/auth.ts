@@ -94,3 +94,23 @@ export const getProfile = async () => {
     //     throw getError(error);
     // }
 };
+
+
+export const getUsersMenus = async () => {
+    try{
+        const url :string = "https://localhost:5001/api/user/menus";
+        let menus:any;
+        await axios
+            .get(url)
+            .then((res) => {
+                menus = res.data;
+                return menus;
+            });
+        return menus;
+    }catch(error : any){
+        throw getError({
+            message : "伺服器暫時無法使用"
+        });
+    }
+};
+
