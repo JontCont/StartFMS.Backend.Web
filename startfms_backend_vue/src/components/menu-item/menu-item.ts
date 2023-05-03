@@ -33,7 +33,7 @@ export default class MenuItem extends Vue {
             this.toggleMenu();
             return;
         }
-        this.$router.replace(this.menuItem.path);
+        this.$router.replace(this.menuItem.url);
     }
 
     public toggleMenu() {
@@ -45,12 +45,12 @@ export default class MenuItem extends Vue {
         this.isOneOfChildrenActive = false;
         if (this.isExpandable) {
             this.menuItem.children.forEach((item: any) => {
-                if (item.path === url) {
+                if (item.url === url) {
                     this.isOneOfChildrenActive = true;
                     this.isMenuExtended = true;
                 }
             });
-        } else if (this.menuItem.path === url) {
+        } else if (this.menuItem.url === url) {
             this.isMainActive = true;
         }
         if (!this.isMainActive && !this.isOneOfChildrenActive) {

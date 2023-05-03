@@ -3,7 +3,8 @@ import {Options, Vue} from 'vue-class-component';
 import MenuItem from '@/components/menu-item/menu-item.vue';
 import {PfImage} from '@profabric/vue-components';
 import SidebarSearch from '@/components/sidebar-search/sidebar-search.vue';
-import {i18n} from '@/translation';
+// import {i18n} from '@/translation';
+import {getUsersMenus} from '@/services/auth'
 
 @Options({
     name: 'app-menu-sidebar',
@@ -14,7 +15,7 @@ import {i18n} from '@/translation';
     }
 })
 export default class MenuSidebar extends Vue {
-    public menu = MENU;
+    public menu: any = []; // 設置為空數組，直到 Promise 解決為止
     get user(): IUser {
         return this.$store.getters['auth/user'];
     }
@@ -23,32 +24,7 @@ export default class MenuSidebar extends Vue {
         return this.$store.getters['ui/sidebarSkin'];
     }
 
-    created() {
-        console.log(MENU);
+    async created() { // 確保 Promise 解決後，再繼續創建組件
+        this.menu = await getUsersMenus();
     }
 }
-
-export const MENU = [
-    {
-        name: i18n.global.t('labels.dashboard'),
-        path: '/'
-    },
-    {
-        name: i18n.global.t('labels.blank'),
-        path: '/blank'
-    },
-    {
-        name: i18n.global.t('labels.mainMenu'),
-        children: [
-            {
-                name: i18n.global.t('labels.subMenu'),
-                path: '/sub-menu-1'
-            },
-
-            {
-                name: i18n.global.t('labels.blank'),
-                path: '/sub-menu-2'
-            }
-        ]
-    }
-];

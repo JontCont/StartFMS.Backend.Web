@@ -1,6 +1,8 @@
-import {MENU} from '@/modules/main/menu-sidebar/menu-sidebar';
+// import {MENU} from '@/modules/main/menu-sidebar/menu-sidebar';
+
 import {PfDropdown} from '@profabric/vue-components';
 import {Options, Vue} from 'vue-class-component';
+import {getUsersMenus} from '@/services/auth'
 
 @Options({
     name: 'app-sidebar-search',
@@ -12,13 +14,15 @@ export default class SidebarSearch extends Vue {
     public searchText: string = '';
     public foundMenuItems: any[] = [];
     public isDropdownOpen: boolean = false;
+    // public  MENU = getUsersMenus();
+    public MENU: any = []; // 設置為空數組，直到 Promise 解決為止
 
     public handleSearchTextChange(event: any) {
         this.foundMenuItems = [];
 
         if (event.target.value) {
             this.searchText = event.target.value;
-            this.findMenuItems(MENU);
+            this.findMenuItems(this.MENU);
             return;
         } else {
             this.searchText = '';
@@ -71,5 +75,9 @@ export default class SidebarSearch extends Vue {
 
     private capitalizeFirstLetter(string: string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    async created() { // 確保 Promise 解決後，再繼續創建組件
+        this.MENU = await getUsersMenus();
     }
 }
